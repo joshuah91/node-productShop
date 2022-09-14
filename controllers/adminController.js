@@ -1,21 +1,17 @@
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
-  res.render("add-product", {
+  res.render("admin/add-product", {
     docTitle: "Add Product",
     path: "/admin/add-product",
-    activeAddProduct: true,
-    productCSS: true,
   });
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const n = req.body.price;
-  // const num = n.toFixed(2);
-  // console.log(num);
   const product = new Product(
     req.body.title,
-    req.body.price
+    req.body.price,
+    req.body.description
   );
   product.save();
   res.redirect("/");
@@ -23,13 +19,10 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   const products = Product.fetchAll((products) => {
-    res.render("shop", {
+    res.render("admin/products", {
       prods: products,
-      docTitle: "Shop",
-      path: "/",
-      hasProducts: products.length > 0,
-      activeShop: true,
+      docTitle: "Admin Products",
+      path: "/admin/products",
     });
   });
-
 };
