@@ -56,21 +56,38 @@ main {
 }
 
 .form-control label,
-.form-control input {
+.form-control input,
+.form-control textarea {
   display: block;
+  margin-bottom: 10px;
 }
 
 .form-control input {
-  border: 1px solid #dbc441;
+  border: 0.8px solid #bba58e;
   font: inherit;
   border-radius: 2px;
   width: 80%;
   max-width: 420px;
   height: 30px;
-   
+  background-color: #fafafa;
 }
 
-button  {
+.form-control textarea {
+  border: 0.8px solid #dbc441;
+  font: inherit;
+  border-radius: 2px;
+  width: 80%;
+  max-width: 420px;
+  resize: none;
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+  outline-color: #5800a1;
+  outline-width: 0.8px;
+}
+
+button {
   font: inherit;
   border: 1px solid #5800a1;
   color: #5800a1;
