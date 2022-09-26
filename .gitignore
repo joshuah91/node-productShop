@@ -1,0 +1,32 @@
+# -== exlude editors config directories ==-
+.idea
+.idea/
+.vscode
+.vscode/
+
+# -== exlude node_modules ==-
+/node_modules
+
+# -== eclude npm lock file ==-
+package-lock.json
+
+# -== exlude build directory ==-
+/dist/
+/html/
+
+# -== exclude .env ==-
+.env
+.dev.env
+.test.env
+
+# -== delete directory ==-
+_deleted/
+
+.editorconfig
+.eslintrc.js
+.stylelintrc.json
+stats.json
+monitor/*
+coverage
+/coverage/
+/nbproject/private/
