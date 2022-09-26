@@ -8,6 +8,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+const sequelize = require("./util/database");
 const rootDir = require("./util/path");
 const errorController = require("./controllers/errorController");
 
@@ -22,4 +23,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3001);
+sequelize
+  .sync()
+  .then((result) => {
+    // console.log(result);
+    app.listen(3001);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
