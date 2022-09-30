@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -8,18 +9,27 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
+//create a new product model using the sequelize create method
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const image = req.body.image;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(null, title, image, price, description);
-  product
-    .save()
-    .then(() => {
-      res.redirect("/");
+  req.user
+    .createProduct({
+      title: title,
+      price: price,
+      image: image,
+      description: description,
+      userId: req.user.id,
     })
-    .catch((err) => console.log(err));
+    .then((result) => {
+      console.log("Created Product Successfully!");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -28,17 +38,24 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
-    if (!product) {
-      return res.redirect("/");
-    }
-    res.render("admin/edit-product", {
-      docTitle: "Edit Product",
-      path: "/admin/edit-product",
-      editing: editMode,
-      product: product,
+  req.user
+    .getProducts({ where: { id: prodId } })
+    // Product.findByPk(prodId)
+    .then((products) => {
+      const product = products[0];
+      if (!product) {
+        return res.redirect("/");
+      }
+      res.render("admin/edit-product", {
+        docTitle: "Edit Product",
+        path: "/admin/edit-product",
+        editing: editMode,
+        product: product,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -47,35 +64,46 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImage = req.body.image;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
-  const updatedProduct = new Product(
-    prodId,
-    updatedTitle,
-    updatedImage,
-    updatedPrice,
-    updatedDescription
-  );
-  updatedProduct.save();
-  res.redirect("/admin/products");
+  Product.findByPk(prodId)
+    .then((product) => {
+      product.title = updatedTitle;
+      product.price = updatedPrice;
+      product.image = updatedImage;
+      product.description = updatedDescription;
+      return product.save();
+    })
+    .then((result) => {
+      console.log("Updated Product Successfully!");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
-  res.redirect("/admin/products");
+  Product.findByPk(prodId)
+    .then((product) => {
+      return product.destroy();
+    })
+    .then((result) => {
+      console.log("Product Deleted Successfully!");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getProducts = (req, res, next) => {
-  // const products = Product.fetchAll((products) => {
-  //   res.render("admin/products", {
-  //     prods: products,
-  //     docTitle: "Admin Products",
-  //     path: "/admin/products",
-  //   });
-  // });
-  Product.fetchAll()
-    .then(([rows]) => {
+  //find all product with sequelize req.user.getproducts() method
+  // Product.findAll()
+  req.user
+    .getProducts()
+    .then((product) => {
       res.render("admin/products", {
-        prods: rows,
+        prods: product,
         docTitle: "Admin Products",
         path: "/admin/products",
       });
