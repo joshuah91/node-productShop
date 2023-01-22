@@ -1,9 +1,1 @@
-[
-  {
-    "id": "0.32750156999217106",
-    "title": "First Book",
-    "image": "https://media.gettyimages.com/photos/stack-of-books-picture-id157482029?k=20&m=157482029&s=612x612&w=0&h=b_0K-1Ut9alhKYu9zlgevSAHDkqSxLF634VDwPw8CHU=",
-    "price": "10.99",
-    "description": "This is the first book!"
-  }
-]
+[{"id":"123245","title":"A Book","imageUrl":"https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg","description":"This is an awesome book!","price":"19"},{"id":"0.41607315815753076","title":"fasfd","imageUrl":"fdasfs","description":"fadsfads","price":"12"}]
