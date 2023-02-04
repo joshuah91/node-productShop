@@ -1,25 +1,30 @@
 {
-  "name": "node-samples",
+  "name": "nodejs-complete-guide",
   "version": "1.0.0",
-  "description": "my node sample file",
+  "description": "Complete Node.js Guide",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
   },
-  "author": "Joshua Balogun",
+  "author": "Maximilian Schwarzmüller",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^1.18.3"
   },
   "dependencies": {
-    "body-parser": "^1.20.0",
-    "ejs": "^3.1.8",
-    "express": "^4.18.1",
-    "express-handlebars": "3.0",
-    "mongodb": "^4.10.0",
-    "mysql2": "^2.3.3",
-    "pug": "^3.0.2",
-    "sequelize": "^6.23.1"
+    "body-parser": "^1.18.3",
+    "connect-mongodb-session": "^3.1.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.17.3",
+    "mongodb": "^3.1.6",
+    "mongoose": "^5.2.17",
+    "mysql2": "^1.6.1",
+    "pug": "^2.0.3",
+    "sequelize": "^5.0.0-beta.11"
   }
 }
